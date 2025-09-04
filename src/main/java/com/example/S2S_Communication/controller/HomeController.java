@@ -1,17 +1,23 @@
-package com.example.S2S_Communication.rest_template.controller;
+package com.example.S2S_Communication.controller;
 
 
-import com.example.S2S_Communication.rest_template.service.RestTemplateService;
+import com.example.S2S_Communication.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/rest-template")
 public class HomeController {
 
     @Autowired
-    private RestTemplateService service;
+    @Qualifier("web-client")
+    private Service service;
+
+    @GetMapping
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(service.getAll());
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPostById(@PathVariable(name = "id") Integer id) {
